@@ -38,7 +38,7 @@ export default function Quizz() {
                 .then(body => {
                     setQuizz(buildQuizz(body.results))
                 })
-            setIsLoadingQuizz(false)
+                .then(() => setIsLoadingQuizz(false))
         }
     }, [isLoadingQuizz])
 

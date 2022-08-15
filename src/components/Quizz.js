@@ -4,73 +4,72 @@ import Challenge from "./Challenge"
 import { nanoid } from "nanoid"
 
 export default function Quizz() {
-    const [challenges, setChallenges] = React.useState([])
+    const [quizz, setQuizz] = React.useState([])
     const [isChecking, setIsChecking] = React.useState(false)
+    const [isLoadingQuizz, setIsLoadingQuizz] = React.useState(true)
 
-    // retrieve, build and set challenges state array with the challenges objects
+    // retrieve, build and set quizz state array with the quizz objects
     React.useEffect(() => {
-        console.log("gogogo useeffect")
-        function buildChallenges(data) {
-            const newChallenges = data.map(element => {
-                let answers = element.incorrect_answers
-                answers.push(element.correct_answer)
-                answers = answers.map(answer => {
+        if (isLoadingQuizz) {
+            setIsChecking(false)
+            function buildQuizz(data) {
+                const newQuizz = data.map(element => {
+                    let answers = element.incorrect_answers
+                    answers.push(element.correct_answer)
+                    answers = answers.map(answer => {
+                        return ({
+                            answer: answer,
+                            key: nanoid()
+                        })
+                    })
                     return ({
-                        answer: answer,
-                        key: nanoid()
+                        question: element.question,
+                        correctAnswer: element.correct_answer,
+                        answers: answers,
+                        key: nanoid(),
+                        selectedAnswer: null
                     })
                 })
-                return ({
-                    question: element.question,
-                    correctAnswer: element.correct_answer,
-                    answers: answers,
-                    key: nanoid(),
-                    selectedAnswer: null
-                })
-            })
-            return newChallenges
-        }
+                return newQuizz
+            }
 
-        fetch("https://opentdb.com/api.php?amount=5&category=19")
-            .then(response => response.json())
-            .then(body => {
-                console.log(body.results)
-                setChallenges(buildChallenges(body.results))
-            })
-    }, [])
+            fetch("https://opentdb.com/api.php?amount=5&category=19")
+                .then(response => response.json())
+                .then(body => {
+                    setQuizz(buildQuizz(body.results))
+                })
+            setIsLoadingQuizz(false)
+        }
+    }, [isLoadingQuizz])
 
     function selectAnAnswer(challengeQuestion, answer) {
         if (!isChecking) {
-            const newChallenges = challenges.map(challenge => {
+            const newQuizz = quizz.map(challenge => {
                 const newChallenge = {
                     ...challenge,
                     selectedAnswer: challengeQuestion === challenge.question ? answer : challenge.selectedAnswer
                 }
                 return newChallenge
             })
-            setChallenges(newChallenges)
+            setQuizz(newQuizz)
         }
     }
 
     function CountScore() {
-        const score = challenges.map(challenge => challenge.selectedAnswer === challenge.correctAnswer ? 1 : 0).reduce((a, b) => a + b, 0)
+        const score = quizz.map(challenge => challenge.selectedAnswer === challenge.correctAnswer ? 1 : 0).reduce((a, b) => a + b, 0)
         return <span className="score">You scored {score}/5</span>
     }
 
-    const wrappedChallenges = challenges.map(challenge => <Challenge {...challenge} selectAnAnswer={selectAnAnswer} isChecking={isChecking} />)
-    console.log(wrappedChallenges)
+    const wrappedQuizz = quizz.map(challenge => <Challenge {...challenge} selectAnAnswer={selectAnAnswer} isChecking={isChecking} />)
+    console.log(wrappedQuizz)
+
     return (
         <div>
-            {challenges && wrappedChallenges}
-            {/* {challenges
-                ?
-                { wrappedChallenges }
-                :
-                <div>("loading")</div>
-            } */}
+            {!isLoadingQuizz && wrappedQuizz}
+            {isLoadingQuizz && <div>"loading"</div>}
             <div className="button-container">
                 {isChecking && <CountScore />}
-                <button className="button-check-answers" onClick={() => setIsChecking(true)}>{isChecking ? "Another Quizz !" : "Check answers"}</button>
+                <button className="button-check-answers" onClick={isChecking ? () => setIsLoadingQuizz(true) : () => setIsChecking(true)}>{isChecking ? "Another Quizz !" : "Check answers"}</button>
             </div>
         </div>
     )

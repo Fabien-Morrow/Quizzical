@@ -9,7 +9,7 @@ export default function App() {
 
     const [isWelcomed, setIsWelcomed] = React.useState(true)
 
-    function startChallenges() {
+    function startQuizz() {
         setIsWelcomed(false)
 
 

@@ -1,9 +1,17 @@
 import React from "react"
 
-import Challenge from "./Challenge"
+import { Ellipsis } from 'react-awesome-spinners'
 import { nanoid } from "nanoid"
 
-export default function Quizz() {
+import Challenge from "./Challenge"
+
+
+function CountScore(props) {
+    const score = props.quizz.map(challenge => challenge.selectedAnswer === challenge.correctAnswer ? 1 : 0).reduce((a, b) => a + b, 0)
+    return <span className="score">You scored {score}/{props.quizz.length}</span>
+}
+
+export default function Quizz(props) {
     const [quizz, setQuizz] = React.useState([])
     const [isChecking, setIsChecking] = React.useState(false)
     const [isLoadingQuizz, setIsLoadingQuizz] = React.useState(true)
@@ -16,6 +24,7 @@ export default function Quizz() {
                 const newQuizz = data.map(element => {
                     let answers = element.incorrect_answers
                     answers.push(element.correct_answer)
+                    answers = answers.sort()
                     answers = answers.map(answer => {
                         return ({
                             answer: answer,
@@ -32,8 +41,9 @@ export default function Quizz() {
                 })
                 return newQuizz
             }
-
-            fetch("https://opentdb.com/api.php?amount=5&category=19")
+            const url = `https://opentdb.com/api.php?amount=${props.amount}&category=${props.category}&difficulty=${props.difficulty}`
+            console.log(url)
+            fetch(url)
                 .then(response => response.json())
                 .then(body => {
                     setQuizz(buildQuizz(body.results))
@@ -55,21 +65,17 @@ export default function Quizz() {
         }
     }
 
-    function CountScore() {
-        const score = quizz.map(challenge => challenge.selectedAnswer === challenge.correctAnswer ? 1 : 0).reduce((a, b) => a + b, 0)
-        return <span className="score">You scored {score}/5</span>
-    }
-
     const wrappedQuizz = quizz.map(challenge => <Challenge {...challenge} selectAnAnswer={selectAnAnswer} isChecking={isChecking} />)
     console.log(wrappedQuizz)
 
     return (
         <div>
             {!isLoadingQuizz && wrappedQuizz}
-            {isLoadingQuizz && <div>"loading"</div>}
+            {isLoadingQuizz && <div className="loadingContainer"><Ellipsis /></div>}
             <div className="button-container">
-                {isChecking && <CountScore />}
-                <button className="button-check-answers" onClick={isChecking ? () => setIsLoadingQuizz(true) : () => setIsChecking(true)}>{isChecking ? "Another Quizz !" : "Check answers"}</button>
+                {isChecking && <CountScore quizz={quizz} />}
+                <button className="button" onClick={isChecking ? () => setIsLoadingQuizz(true) : () => setIsChecking(true)}>{isChecking ? "Another Quizz !" : "Check answers"}</button>
+                <button className="button" onClick={() => props.stop()}>Back</button>
             </div>
         </div>
     )

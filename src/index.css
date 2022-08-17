@@ -2,6 +2,18 @@ body {
     background-color: #0a113a;
 }
 
+h1 {
+    font-family: 'Karla';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 31.25px;
+    line-height: 37px;
+    text-align: center;
+
+    color: #293264;
+}
+
+
 h2 {
     max-width: 550px;
 
@@ -17,11 +29,26 @@ h2 {
     margin-bottom: 12px;
 }
 
+h3 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+}
+
 hr {
     margin: 0px;
     border: 0.794239px solid #DBDEF0;
 }
 
+.challenge-options-container {}
+
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+}
 
 .quizzical-container {
     width: 750px;
@@ -80,8 +107,9 @@ hr {
     margin-right: 20px;
 }
 
-.button-check-answers {
+.button {
     margin-top: 20px;
+    margin-right: 20px;
     background: #4D5B9E;
     border-radius: 10px;
     padding: 10px 20px;
@@ -94,4 +122,10 @@ hr {
     line-height: 12px;
     text-align: center;
     color: #F5F7FB;
+}
+
+.welcome-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

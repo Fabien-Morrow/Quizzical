@@ -42,6 +42,7 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^4.0.0"
+    "gh-pages": "^4.0.0",
+    "modclean": "^3.0.0-beta.1"
   }
 }

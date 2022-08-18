@@ -1,7 +1,7 @@
 import React from "react"
 import he from "he"
 
-import Answer from "../Answer/Answer"
+import Answer from "./Answer/Answer"
 
 import styles from "./Challenge.module.css"
 

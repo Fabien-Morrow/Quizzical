@@ -1,0 +1,34 @@
+.answer {
+    box-sizing: border-box;
+    min-width: 65px;
+    height: 27px;
+
+    border-radius: 7.71045px;
+    margin: 0px 13px 15px 0;
+
+    padding: 4px 7px;
+}
+
+.free {
+    composes: answer;
+    border: 0.771045px solid #4D5B9E;
+    background-color: #F5F7FB;
+}
+
+.selected {
+    composes: answer;
+    background: #D6DBF5;
+    border: none;
+}
+
+.true {
+    composes: answer;
+    background: #94D7A2;
+    border: none;
+}
+
+.false {
+    composes: answer;
+    background: #F8BCBC;
+    border: none;
+}

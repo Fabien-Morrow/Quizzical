@@ -1,0 +1,68 @@
+h1 {
+    font-family: 'Karla';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 31.25px;
+    line-height: 37px;
+    text-align: center;
+
+    color: #293264;
+}
+
+h3 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+}
+
+.divWelcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.divOptionCategory {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    text-align: center;
+}
+
+.divQuizzOptions {
+    width: 300px;
+
+    font-family: 'Karla';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    text-align: center;
+
+    color: #293264;
+}
+
+.fieldsetDifficulty {
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.buttonStart {
+    margin-top: 20px;
+    margin-right: 20px;
+    background: #4D5B9E;
+    border-radius: 10px;
+    padding: 10px 20px;
+    border: none;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 12px;
+    text-align: center;
+    color: #F5F7FB;
+}

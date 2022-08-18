@@ -1,7 +1,9 @@
 import React from "react"
 
-import Welcome from "./components/Welcome"
+import Welcome from "./components/Welcome/Welcome"
 import Quizz from "./components/Quizz/Quizz"
+
+import styles from "./App.module.css"
 
 export default function App() {
     const [choosenQuizz, setChoosenQuizz] = React.useState({
@@ -10,6 +12,8 @@ export default function App() {
         amount: "10",
     })
     const [isWelcomed, setIsWelcomed] = React.useState(true)
+
+    React.useEffect(() => console.log(choosenQuizz), [choosenQuizz])
 
     function selectChallengeOption(event) {
         if (event.target) {
@@ -27,7 +31,7 @@ export default function App() {
     }
 
     return (
-        <div className="quizzical-container">
+        <div className={styles.divQuizzical}>
             {isWelcomed
                 ?
                 <Welcome
@@ -36,9 +40,10 @@ export default function App() {
                     selectChallengeOption={selectChallengeOption}
                 />
                 :
-                <Quizz {...choosenQuizz} stop={() => setIsWelcomed(true)} />
+                <Quizz {...choosenQuizz} goBack={() => setIsWelcomed(true)} />
             }
         </div>
+
     )
 
 }

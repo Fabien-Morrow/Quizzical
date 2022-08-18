@@ -1,16 +1,21 @@
-.buttonCheck {
-    margin-top: 20px;
-    margin-right: 20px;
-    background: #4D5B9E;
-    border-radius: 10px;
-    padding: 10px 20px;
-    border: none;
+.divLoadingContainer {
+    display: flex;
+    justify-content: center;
+}
 
+.divButtonContainer {
+    text-align: center;
+}
+
+.spanScore {
     font-family: 'Inter';
     font-style: normal;
-    font-weight: 600;
-    font-size: 10px;
-    line-height: 12px;
+    font-weight: 700;
+    font-size: 12.8px;
+    line-height: 15px;
     text-align: center;
-    color: #F5F7FB;
+
+    color: #293264;
+
+    margin-right: 20px;
 }

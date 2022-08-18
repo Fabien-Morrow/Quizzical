@@ -1,0 +1,9 @@
+.divChooseNumberQuestions {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.numberQuestions {
+    width: 40px;
+}

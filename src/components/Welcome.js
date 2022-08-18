@@ -4,18 +4,24 @@ import Select from 'react-select'
 export default function Welcome(props) {
 
     const [categories, setCategories] = React.useState([])
+
     React.useEffect(() => {
-        fetch("https://opentdb.com/api_category.php")
-            .then(response => response.json())
-            .then(primitivesCategories => {
-                let dataShaped = primitivesCategories.trivia_categories.map(({ id, name }) => {
-                    return {
-                        value: id,
-                        label: name
-                    }
+
+        function retrieveAndBuildCategories(url) {
+            fetch(url)
+                .then(response => response.json())
+                .then(primitivesCategories => {
+                    let dataShaped = primitivesCategories.trivia_categories.map(({ id, name }) => {
+                        return {
+                            value: id,
+                            label: name
+                        }
+                    })
+                    setCategories(dataShaped)
                 })
-                setCategories(dataShaped)
-            })
+        }
+
+        retrieveAndBuildCategories("https://opentdb.com/api_category.php")
     }, [])
 
     function getCategorieObject(id) {

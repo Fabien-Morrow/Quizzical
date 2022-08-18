@@ -1,7 +1,7 @@
 import React from "react"
 
 import Welcome from "./components/Welcome"
-import Quizz from "./components/Quizz"
+import Quizz from "./components/Quizz/Quizz"
 
 export default function App() {
     const [choosenQuizz, setChoosenQuizz] = React.useState({
@@ -11,32 +11,30 @@ export default function App() {
     })
     const [isWelcomed, setIsWelcomed] = React.useState(true)
 
-    React.useEffect(() => console.log(choosenQuizz), [choosenQuizz])
-
     function selectChallengeOption(event) {
         if (event.target) {
+            // a Real event (difficulty or number of questions) triggered
             const { name, value, type } = event.target
             setChoosenQuizz(prev => {
                 return { ...prev, [name]: type === "checkbox" ? "checked" : value }
             })
         } else {
-            // console.log("selected : ", event)
+            // react-select (categories part) triggered
             setChoosenQuizz(prev => {
                 return { ...prev, category: event.value }
             })
-
         }
-    }
-
-    function startQuizz() {
-        setIsWelcomed(false)
     }
 
     return (
         <div className="quizzical-container">
             {isWelcomed
                 ?
-                <Welcome start={() => setIsWelcomed(false)} choosenQuizz={choosenQuizz} selectChallengeOption={selectChallengeOption} />
+                <Welcome
+                    start={() => setIsWelcomed(false)}
+                    choosenQuizz={choosenQuizz}
+                    selectChallengeOption={selectChallengeOption}
+                />
                 :
                 <Quizz {...choosenQuizz} stop={() => setIsWelcomed(true)} />
             }

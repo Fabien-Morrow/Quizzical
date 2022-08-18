@@ -3,8 +3,29 @@ import React from "react"
 import { Ellipsis } from 'react-awesome-spinners'
 import { nanoid } from "nanoid"
 
-import Challenge from "./Challenge"
+import Challenge from "../Challenge"
 
+import styles from "./Quizz.module.css"
+
+function ButtonCheck(props) {
+    return (
+        <button
+            className={styles.buttonCheck}
+            onClick={props.onClick}
+        >
+            Check answers
+        </button>)
+}
+
+function ButtonGenerateAnotherQuizz(props) {
+    return (
+        <button
+            className={styles.buttonCheck}
+            onClick={props.onClick}
+        >
+            Another Quizz !
+        </button>)
+}
 
 function CountScore(props) {
     const score = props.quizz.map(challenge => challenge.selectedAnswer === challenge.correctAnswer ? 1 : 0).reduce((a, b) => a + b, 0)
@@ -42,7 +63,7 @@ export default function Quizz(props) {
                 return newQuizz
             }
             const url = `https://opentdb.com/api.php?amount=${props.amount}&category=${props.category}&difficulty=${props.difficulty}`
-            console.log(url)
+
             fetch(url)
                 .then(response => response.json())
                 .then(body => {
@@ -50,7 +71,7 @@ export default function Quizz(props) {
                 })
                 .then(() => setIsLoadingQuizz(false))
         }
-    }, [isLoadingQuizz])
+    }, [isLoadingQuizz, props])
 
     function selectAnAnswer(challengeQuestion, answer) {
         if (!isChecking) {
@@ -74,7 +95,16 @@ export default function Quizz(props) {
             {isLoadingQuizz && <div className="loadingContainer"><Ellipsis /></div>}
             <div className="button-container">
                 {isChecking && <CountScore quizz={quizz} />}
-                <button className="button" onClick={isChecking ? () => setIsLoadingQuizz(true) : () => setIsChecking(true)}>{isChecking ? "Another Quizz !" : "Check answers"}</button>
+                {isChecking
+                    ?
+                    <ButtonGenerateAnotherQuizz
+                        onClick={() => setIsLoadingQuizz(true)}
+                    />
+                    :
+                    <ButtonCheck
+                        onClick={() => setIsChecking(true)}
+                    />
+                }
                 <button className="button" onClick={() => props.stop()}>Back</button>
             </div>
         </div>

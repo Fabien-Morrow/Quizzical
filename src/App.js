@@ -3,23 +3,29 @@ import React from "react"
 import Welcome from "./components/Welcome"
 import Quizz from "./components/Quizz"
 
-// https://opentdb.com/api.php?amount=5&category=19
-
 export default function App() {
-    const [choosenChallenge, setchoosenChallenge] = React.useState({
+    const [choosenQuizz, setChoosenQuizz] = React.useState({
         category: "",
         difficulty: "",
         amount: "10",
     })
     const [isWelcomed, setIsWelcomed] = React.useState(true)
 
-    React.useEffect(() => console.log(choosenChallenge), [choosenChallenge])
+    React.useEffect(() => console.log(choosenQuizz), [choosenQuizz])
 
     function selectChallengeOption(event) {
-        const { name, value, type } = event.target
-        setchoosenChallenge(prev => {
-            return { ...prev, [name]: type === "checkbox" ? "checked" : value }
-        })
+        if (event.target) {
+            const { name, value, type } = event.target
+            setChoosenQuizz(prev => {
+                return { ...prev, [name]: type === "checkbox" ? "checked" : value }
+            })
+        } else {
+            // console.log("selected : ", event)
+            setChoosenQuizz(prev => {
+                return { ...prev, category: event.value }
+            })
+
+        }
     }
 
     function startQuizz() {
@@ -30,9 +36,9 @@ export default function App() {
         <div className="quizzical-container">
             {isWelcomed
                 ?
-                <Welcome start={() => setIsWelcomed(false)} choosenChallenge={choosenChallenge} selectChallengeOption={selectChallengeOption} />
+                <Welcome start={() => setIsWelcomed(false)} choosenQuizz={choosenQuizz} selectChallengeOption={selectChallengeOption} />
                 :
-                <Quizz {...choosenChallenge} stop={() => setIsWelcomed(true)} />
+                <Quizz {...choosenQuizz} stop={() => setIsWelcomed(true)} />
             }
         </div>
     )

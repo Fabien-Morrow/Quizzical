@@ -43,12 +43,32 @@ hr {
     border: 0.794239px solid #DBDEF0;
 }
 
-select {
-    border: 50px;
+fieldset {
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+input[type="radio"] {
+    margin: 0 7px 0 0;
+}
+
+input[type='number'] {
+    width: 40px;
 }
 
 
-.challenge-options-container {}
+.challenge-options-container {
+    width: 300px;
+
+    font-family: 'Karla';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    text-align: center;
+
+    color: #293264;
+}
 
 .loadingContainer {
     display: flex;
@@ -132,5 +152,19 @@ select {
 .welcome-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
+}
+
+.option {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    text-align: center;
+}
+
+.numberQuestionsContainer {
+    display: flex;
+    justify-content: space-around;
     align-items: center;
 }

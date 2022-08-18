@@ -21,9 +21,9 @@ export default function Quizz(props) {
         if (isLoadingQuizz) {
             setIsChecking(false)
             function buildQuizz(data) {
-                const newQuizz = data.map(element => {
-                    let answers = element.incorrect_answers
-                    answers.push(element.correct_answer)
+                const newQuizz = data.map(primitiveChallenge => {
+                    let answers = primitiveChallenge.incorrect_answers
+                    answers.push(primitiveChallenge.correct_answer)
                     answers = answers.sort()
                     answers = answers.map(answer => {
                         return ({
@@ -32,8 +32,8 @@ export default function Quizz(props) {
                         })
                     })
                     return ({
-                        question: element.question,
-                        correctAnswer: element.correct_answer,
+                        question: primitiveChallenge.question,
+                        correctAnswer: primitiveChallenge.correct_answer,
                         answers: answers,
                         key: nanoid(),
                         selectedAnswer: null
